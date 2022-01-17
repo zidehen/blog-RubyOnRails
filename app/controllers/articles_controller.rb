@@ -12,7 +12,7 @@ class ArticlesController < ApplicationController
   end
 
   def create
-    @article = Article.new(title: "...", body: "...")
+    @article = Article.new(article_params)
 
     if @article.save #saves article
       redirect_to @article #redirect_to: browser makes a new request
@@ -20,4 +20,9 @@ class ArticlesController < ApplicationController
       render :new, status: :unprocessable_entity #renders the specified view for current request
     end
   end
+
+  private
+    def article_params
+      params.require(:article).permit(:title, :body)
+    end
 end
